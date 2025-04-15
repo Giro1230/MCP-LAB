@@ -8,5 +8,6 @@ const app = express();
 app.use(express.json());
 
 app.post("/mcp/ask", askMCP);
+app.get("/mcp/health", healthCheck);
 
 export default app;
