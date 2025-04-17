@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { BaseLLMConfig } from "./baseLLMConfig";
+import { LLM_CONFIG } from "../config/llm.config";
 
 dotenv.config();
 
@@ -13,8 +14,9 @@ class OpenAiDto extends BaseLLMConfig {
 
     constructor() {
         super();
-        this.url = process.env.OPENAI_URL || "";
-        this.apiKey = process.env.OPENAI_API_KEY || "";
+        const config = LLM_CONFIG.openai;
+        this.url = config.url;
+        this.apiKey = config.apiKey;
     }
 
     async generateText(prompt: string): Promise<string> {
@@ -26,7 +28,7 @@ class OpenAiDto extends BaseLLMConfig {
                     "Authorization": `Bearer ${this.apiKey}`
                 },
                 body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
+                    model: LLM_CONFIG.openai.model,
                     messages: [{ role: "user", content: prompt }]
                 })
             });

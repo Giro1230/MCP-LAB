@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
 import { BaseLLMConfig } from "./baseLLMConfig";
-
-dotenv.config();
+import { LLM_CONFIG } from "../config/llm.config";
 
 type HuggingFaceResponse = 
   | { generated_text: string }[]
@@ -13,8 +11,9 @@ class HuggingFaceDto extends BaseLLMConfig {
 
     constructor() {
         super();
-        this.url = process.env.HF_URL || "";
-        this.apiKey = process.env.HF_API_KEY || "";
+        const config = LLM_CONFIG.huggingface;
+        this.url = config.url;
+        this.apiKey = config.apiKey;
     }
 
     async generateText(prompt: string): Promise<string> {

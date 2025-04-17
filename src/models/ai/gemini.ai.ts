@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { BaseLLMConfig } from "./baseLLMConfig";
+import { LLM_CONFIG } from "../config/llm.config";
 
 dotenv.config();
 
@@ -14,8 +15,9 @@ class GeminiDto extends BaseLLMConfig {
 
     constructor() {
         super();
-        this.url = process.env.GEMINI_URL || "";
-        this.apiKey = process.env.GEMINI_API_KEY || "";
+        const config = LLM_CONFIG.gemini;
+        this.url = config.url;
+        this.apiKey = config.apiKey;
     }
 
     async generateText(prompt: string): Promise<string> {
@@ -29,7 +31,7 @@ class GeminiDto extends BaseLLMConfig {
                     contents: [{
                             text: prompt
                         }],
-                    model: "gemini-2.0-flash-lite-001"
+                    model: LLM_CONFIG.gemini.model
                 })
             });
 

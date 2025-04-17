@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import { McpService } from '../service/mcp.service';
-import { MCPRequest, MCPResponse } from '../models/mcp.dto';
+import { McpService } from '../services/mcp.service';
+import { MCPRequest, MCPResponse } from '../models/req-res/mcp.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('MCP 구현')
@@ -9,13 +9,10 @@ export class McpController {
     constructor(private readonly mcpService: McpService) {}
 
     @Post('ask')
-    async handleAsk(@Body() data: MCPRequest): Promise<MCPResponse> {
-        const result : Record<string, string> = await this.mcpService.generateText(data);
+    async getAsk(@Body() data: MCPRequest): Promise<MCPResponse> {
+        const result : MCPResponse = await this.mcpService.generateText(data);
 
-        return {
-            prompt: data.prompt,
-            result
-        };
+        return result;
     }
 
 

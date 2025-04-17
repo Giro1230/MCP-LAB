@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
 import { BaseLLMConfig } from "./baseLLMConfig";
-
-dotenv.config();
+import { LLM_CONFIG } from "../config/llm.config";
 
 type CohereChatResponse = {
     text?: string;
@@ -16,8 +14,9 @@ class CohereDto extends BaseLLMConfig {
 
     constructor() {
         super();
-        this.url = process.env.COHERE_URL || "https://api.cohere.ai/v1/chat";
-        this.apiKey = process.env.COHERE_API_KEY || "";
+        const config = LLM_CONFIG.cohere;
+        this.url = config.url;
+        this.apiKey = config.apiKey;
     }
 
     async generateText(prompt: string): Promise<string> {
